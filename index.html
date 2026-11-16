@@ -4,165 +4,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
- content="width=device-width, initial-scale=1.0">
-<title>J.A.R.V.I.S. | Voice AI</title>
-
+ content="width=device-width, initial-scale=1">
+<title>J.A.R.V.I.S. | Hands-Free AI</title>
 <style>
 :root {
-  --blue: #00dfff;
-  --dark: #020914;
-  --panel: #071c2e;
-  --green: #73ffbf;
+  --blue: #00dcff;
+  --green: #6affbf;
+  --bg: #020914;
 }
-
-* {
-  box-sizing: border-box;
-}
-
+* { box-sizing: border-box; }
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 50% 35%,
-      #104064, #020914 70%);
+  background: radial-gradient(circle at 50% 35%,
+    #103c60, var(--bg) 75%);
   color: var(--blue);
   font-family: "Segoe UI", Arial, sans-serif;
 }
-
 header {
   text-align: center;
-  padding: 25px 15px;
-  border-bottom: 1px solid #12506c;
+  padding: 24px;
+  border-bottom: 1px solid #16516b;
 }
-
 h1 {
   margin: 0;
   letter-spacing: 7px;
   text-shadow: 0 0 20px var(--blue);
 }
-
 #status {
-  margin: 12px;
   color: var(--green);
-  font-size: 13px;
+  margin: 12px;
   letter-spacing: 2px;
+  font-size: 13px;
 }
-
-#clock {
-  color: #9ad9e8;
-  font-size: 14px;
-}
-
+#clock { color: #a1d6e5; }
 .core {
   width: 250px;
   height: 250px;
   margin: 35px auto;
   border: 4px solid var(--blue);
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  box-shadow: 0 0 40px #0088b6,
+    inset 0 0 35px #006e95;
+  display: grid;
+  place-items: center;
   position: relative;
-  box-shadow:
-    0 0 40px #008cbb,
-    inset 0 0 40px #006a99;
-  transition: box-shadow 0.3s;
 }
-
 .core::before {
   content: "";
   position: absolute;
   inset: 15px;
-  border: 3px dashed #62eaff;
+  border: 3px dashed #5eeaff;
   border-radius: 50%;
   animation: spin 12s linear infinite;
 }
-
 .core::after {
   content: "";
   position: absolute;
   inset: 40px;
-  border: 2px solid #1689b5;
+  border: 2px solid #1289b4;
   border-radius: 50%;
   animation: spin 7s linear infinite reverse;
 }
-
 .core span {
   font-size: 30px;
   font-weight: bold;
-  z-index: 1;
   text-shadow: 0 0 20px var(--blue);
+  z-index: 1;
 }
-
 .core.listening {
-  box-shadow:
-    0 0 80px #00eaff,
-    inset 0 0 60px #00dfff;
+  box-shadow: 0 0 75px #00dfff,
+    inset 0 0 55px #00bfff;
 }
-
 .core.speaking {
   animation: pulse 0.9s ease-in-out infinite;
 }
-
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
-
 @keyframes pulse {
   50% {
-    box-shadow:
-      0 0 95px #00dfff,
-      inset 0 0 65px #00dfff;
+    box-shadow: 0 0 95px #00eaff,
+      inset 0 0 65px #00cfff;
   }
 }
-
 .panel {
   width: min(92%, 800px);
   margin: 20px auto;
   padding: 20px;
-  background: rgba(4, 20, 36, 0.92);
+  background: rgba(4, 20, 36, 0.94);
   border: 1px solid #126080;
   border-radius: 12px;
 }
-
-.panel h2 {
+h2 {
+  margin-top: 0;
   font-size: 15px;
   letter-spacing: 2px;
-  margin-top: 0;
 }
-
 #conversation {
-  height: 240px;
+  height: 230px;
   overflow-y: auto;
-  text-align: left;
-  color: #d1f7ff;
+  color: #d4f7ff;
   line-height: 1.6;
 }
-
 .message {
+  background: #09263b;
+  border-left: 3px solid var(--blue);
+  border-radius: 5px;
   padding: 12px;
   margin-bottom: 10px;
-  border-left: 3px solid var(--blue);
-  background: #09263b;
-  border-radius: 5px;
   overflow-wrap: anywhere;
 }
-
-.user {
-  border-left-color: var(--green);
-}
-
-.system {
-  border-left-color: #ffb66b;
-}
-
+.user { border-left-color: var(--green); }
+.system { border-left-color: #ffb66b; }
 .controls {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 15px;
-  flex-wrap: wrap;
 }
-
 input, select {
   background: #061727;
   color: white;
@@ -171,78 +131,58 @@ input, select {
   padding: 12px;
   font-size: 14px;
 }
-
-#command {
-  flex: 1;
-  min-width: 180px;
-}
-
+#command { flex: 1; min-width: 170px; }
 button {
   background: #06415e;
   color: #b5f4ff;
   border: 1px solid var(--blue);
   border-radius: 6px;
-  padding: 12px 18px;
+  padding: 12px 16px;
   cursor: pointer;
 }
-
-button:hover {
-  background: #08638a;
-}
-
+button:hover { background: #08638a; }
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
-.voice-settings {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-top: 15px;
+button.active {
+  border-color: var(--green);
+  color: var(--green);
 }
-
 .setting {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  font-size: 13px;
+  margin: 12px 0;
 }
-
-.setting select {
-  width: 100%;
-}
-
+.setting select { width: 100%; }
 input[type="range"] {
-  width: 100%;
   accent-color: var(--blue);
+  width: 100%;
 }
-
+.voice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
 #systemMessage {
   margin-top: 15px;
+  color: #a2e9ff;
   text-align: center;
-  color: #9deeff;
   font-size: 13px;
 }
-
 footer {
   text-align: center;
   padding: 25px;
-  color: #6798aa;
+  color: #699aaf;
   font-size: 12px;
 }
-
-@media(max-width: 550px) {
-  .voice-settings {
-    grid-template-columns: 1fr;
-  }
-  .controls button {
-    flex: 1;
-  }
+@media(max-width:550px) {
+  .voice-grid { grid-template-columns: 1fr; }
+  .controls button { flex: 1; }
 }
 </style>
 </head>
-
 <body>
 
 <header>
@@ -266,18 +206,21 @@ footer {
   </div>
 
   <div class="controls">
-    <input
-      id="command"
+    <input id="command"
       placeholder="Enter your command..."
-      autocomplete="off"
-    >
+      autocomplete="off">
 
     <button id="sendButton" onclick="sendCommand()">
       SEND
     </button>
 
-    <button id="voiceButton" onclick="startListening()">
+    <button id="talkButton" onclick="startTalk()">
       🎙 TALK
+    </button>
+
+    <button id="handsFreeButton"
+      onclick="toggleHandsFree()">
+      ENABLE HEY JARVIS
     </button>
 
     <button onclick="stopSpeaking()">
@@ -286,7 +229,7 @@ footer {
   </div>
 
   <div id="systemMessage">
-    Awaiting your command, sir.
+    Hands-free mode is currently disabled.
   </div>
 </div>
 
@@ -296,24 +239,19 @@ footer {
   <div class="setting">
     <label for="voiceSelect">JARVIS Voice</label>
     <select id="voiceSelect">
-      <option value="">Loading voices...</option>
+      <option>Loading voices...</option>
     </select>
   </div>
 
-  <div class="voice-settings">
+  <div class="voice-grid">
     <div class="setting">
       <label for="rate">
         Speaking Speed:
         <span id="rateValue">0.95</span>
       </label>
-      <input
-        type="range"
-        id="rate"
-        min="0.6"
-        max="1.4"
-        step="0.05"
-        value="0.95"
-      >
+      <input id="rate" type="range"
+        min="0.6" max="1.4"
+        step="0.05" value="0.95">
     </div>
 
     <div class="setting">
@@ -321,106 +259,97 @@ footer {
         Voice Pitch:
         <span id="pitchValue">0.85</span>
       </label>
-      <input
-        type="range"
-        id="pitch"
-        min="0.5"
-        max="1.5"
-        step="0.05"
-        value="0.85"
-      >
+      <input id="pitch" type="range"
+        min="0.5" max="1.5"
+        step="0.05" value="0.85">
     </div>
   </div>
 
-  <div class="controls">
-    <button onclick="testVoice()">
-      TEST JARVIS VOICE
-    </button>
-  </div>
+  <button onclick="testVoice()">
+    TEST JARVIS VOICE
+  </button>
 </div>
 
 <footer>
-  J.A.R.V.I.S. | INTELLIGENT VOICE ASSISTANT
+  J.A.R.V.I.S. | HANDS-FREE VOICE ASSISTANT
 </footer>
 
 <script>
-
-// KEEP YOUR EXISTING WORKER ADDRESS
+// EXISTING WORKING CLOUDFLARE WORKER
 const WORKER_URL =
   "https://spring-butterfly-a66djarvis-ai-backhand.chrismeek133.workers.dev";
 
-const conversation =
-  document.getElementById("conversation");
+const $ = id => document.getElementById(id);
 
-const commandInput =
-  document.getElementById("command");
+const conversation = $("conversation");
+const commandInput = $("command");
+const systemMessage = $("systemMessage");
+const statusText = $("status");
+const core = $("core");
+const sendButton = $("sendButton");
+const talkButton = $("talkButton");
+const handsFreeButton = $("handsFreeButton");
+const voiceSelect = $("voiceSelect");
 
-const systemMessage =
-  document.getElementById("systemMessage");
-
-const statusText =
-  document.getElementById("status");
-
-const core =
-  document.getElementById("core");
-
-const sendButton =
-  document.getElementById("sendButton");
-
-const voiceButton =
-  document.getElementById("voiceButton");
-
-const voiceSelect =
-  document.getElementById("voiceSelect");
-
-const rateInput =
-  document.getElementById("rate");
-
-const pitchInput =
-  document.getElementById("pitch");
+const Recognition =
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
 
 let voices = [];
 let busy = false;
+let handsFree = false;
+let listening = false;
 let recognition = null;
-let speakingToken = 0;
+let mode = "wake";
+let awaitingCommand = false;
+let speaking = false;
+let restartTimer = null;
+let restartAttempts = 0;
+let speechToken = 0;
 
-// CLOCK
 function updateClock() {
-  document.getElementById("clock").textContent =
-    new Date().toLocaleString();
+  $("clock").textContent = new Date().toLocaleString();
 }
-
 updateClock();
 setInterval(updateClock, 1000);
 
-// CHAT MESSAGES
 function addMessage(sender, text) {
   const div = document.createElement("div");
-
   div.className = "message";
 
-  if (sender === "You") {
-    div.classList.add("user");
-  }
+  if (sender === "You") div.classList.add("user");
+  if (sender === "SYSTEM") div.classList.add("system");
 
-  if (sender === "SYSTEM") {
-    div.classList.add("system");
-  }
+  const strong = document.createElement("strong");
+  strong.textContent = sender + ": ";
 
-  const title = document.createElement("strong");
-  title.textContent = sender + ": ";
+  const span = document.createElement("span");
+  span.textContent = text;
 
-  const content = document.createElement("span");
-  content.textContent = text;
-
-  div.appendChild(title);
-  div.appendChild(content);
-
+  div.append(strong, span);
   conversation.appendChild(div);
   conversation.scrollTop = conversation.scrollHeight;
 }
 
-// LOAD AVAILABLE BROWSER VOICES
+function setStatus(text) {
+  statusText.textContent = text;
+}
+
+function updateHandsFreeButton() {
+  handsFreeButton.textContent = handsFree
+    ? "DISABLE HEY JARVIS"
+    : "ENABLE HEY JARVIS";
+
+  handsFreeButton.classList.toggle("active", handsFree);
+}
+
+function clearRestart() {
+  if (restartTimer !== null) {
+    clearTimeout(restartTimer);
+    restartTimer = null;
+  }
+}
+
 function loadVoices() {
   if (!("speechSynthesis" in window)) {
     voiceSelect.innerHTML =
@@ -429,61 +358,37 @@ function loadVoices() {
   }
 
   voices = speechSynthesis.getVoices();
-
-  const previous = voiceSelect.value;
   voiceSelect.innerHTML = "";
 
-  if (voices.length === 0) {
-    const option = document.createElement("option");
-    option.textContent = "No voices loaded yet";
-    option.value = "";
-    voiceSelect.appendChild(option);
+  if (!voices.length) {
+    voiceSelect.add(new Option("Loading voices...", ""));
     return;
   }
 
-  voices.forEach((voice, index) => {
-    const option = document.createElement("option");
-
-    option.value = String(index);
-    option.textContent =
-      voice.name + " (" + voice.lang + ")";
-
-    voiceSelect.appendChild(option);
+  voices.forEach((voice, i) => {
+    voiceSelect.add(new Option(
+      voice.name + " (" + voice.lang + ")",
+      String(i)
+    ));
   });
 
-  // Restore selection if possible
-  const storedName = localStorage.getItem("jarvisVoice");
-  const savedIndex = voices.findIndex(
-    v => v.name === storedName
-  );
+  const saved = localStorage.getItem("jarvisVoice");
+  let index = voices.findIndex(v => v.name === saved);
 
-  const preferredIndex = voices.findIndex(v =>
-    v.lang.toLowerCase().startsWith("en") &&
-    (
-      v.name.toLowerCase().includes("guy") ||
-      v.name.toLowerCase().includes("david") ||
-      v.name.toLowerCase().includes("ryan")
-    )
-  );
-
-  if (savedIndex >= 0) {
-    voiceSelect.value = String(savedIndex);
-  } else if (
-    previous !== "" &&
-    Number(previous) < voices.length
-  ) {
-    voiceSelect.value = previous;
-  } else if (preferredIndex >= 0) {
-    voiceSelect.value = String(preferredIndex);
-  } else {
-    const englishIndex = voices.findIndex(v =>
-      v.lang.toLowerCase().startsWith("en")
-    );
-
-    voiceSelect.value = String(
-      englishIndex >= 0 ? englishIndex : 0
+  if (index < 0) {
+    index = voices.findIndex(v =>
+      v.lang.toLowerCase().startsWith("en") &&
+      /guy|ryan|david/i.test(v.name)
     );
   }
+
+  if (index < 0) {
+    index = voices.findIndex(v =>
+      v.lang.toLowerCase().startsWith("en")
+    );
+  }
+
+  voiceSelect.value = String(Math.max(index, 0));
 }
 
 if ("speechSynthesis" in window) {
@@ -492,30 +397,21 @@ if ("speechSynthesis" in window) {
 }
 
 voiceSelect.addEventListener("change", () => {
-  const selected = voices[Number(voiceSelect.value)];
-
-  if (selected) {
-    localStorage.setItem(
-      "jarvisVoice",
-      selected.name
-    );
+  const voice = voices[Number(voiceSelect.value)];
+  if (voice) {
+    localStorage.setItem("jarvisVoice", voice.name);
   }
 });
 
-// VOICE SETTINGS
-rateInput.addEventListener("input", () => {
-  document.getElementById("rateValue").textContent =
-    rateInput.value;
+["rate", "pitch"].forEach(id => {
+  $(id).addEventListener("input", () => {
+    $(id + "Value").textContent = $(id).value;
+  });
 });
 
-pitchInput.addEventListener("input", () => {
-  document.getElementById("pitchValue").textContent =
-    pitchInput.value;
-});
-
-// STOP SPEECH
 function stopSpeaking() {
-  speakingToken++;
+  speechToken++;
+  speaking = false;
 
   if ("speechSynthesis" in window) {
     speechSynthesis.cancel();
@@ -523,52 +419,66 @@ function stopSpeaking() {
 
   core.classList.remove("speaking");
 
-  if (!busy) {
-    statusText.textContent = "SYSTEM ONLINE";
+  if (!busy && handsFree) {
+    scheduleRecognition(300);
+  } else if (!busy) {
+    setStatus("SYSTEM ONLINE");
   }
 }
 
-// SPEAK
 function speak(text) {
   if (!("speechSynthesis" in window)) {
-    systemMessage.textContent =
-      "Speech synthesis is not supported.";
+    if (handsFree) scheduleRecognition(300);
     return;
   }
 
-  stopSpeaking();
+  // Prevent the microphone from hearing JARVIS.
+  clearRestart();
 
-  const token = speakingToken;
+  if (recognition) {
+    try { recognition.abort(); } catch {}
+  }
+
+  speechToken++;
+  const token = speechToken;
+
+  speechSynthesis.cancel();
+  speaking = true;
+
   const utterance =
     new SpeechSynthesisUtterance(text);
 
-  const selected =
-    voices[Number(voiceSelect.value)];
+  const voice = voices[Number(voiceSelect.value)];
 
-  if (selected) {
-    utterance.voice = selected;
-    utterance.lang = selected.lang;
+  if (voice) {
+    utterance.voice = voice;
+    utterance.lang = voice.lang;
   } else {
     utterance.lang = "en-US";
   }
 
-  utterance.rate = Number(rateInput.value);
-  utterance.pitch = Number(pitchInput.value);
-  utterance.volume = 1;
+  utterance.rate = Number($("rate").value);
+  utterance.pitch = Number($("pitch").value);
 
   utterance.onstart = () => {
-    if (token !== speakingToken) return;
-
+    if (token !== speechToken) return;
     core.classList.add("speaking");
-    statusText.textContent = "JARVIS SPEAKING";
+    setStatus("JARVIS SPEAKING");
   };
 
-  function finish() {
-    if (token !== speakingToken) return;
+  const finish = () => {
+    if (token !== speechToken) return;
 
+    speaking = false;
     core.classList.remove("speaking");
-    statusText.textContent = "SYSTEM ONLINE";
-  }
+    setStatus("SYSTEM ONLINE");
+
+    if (handsFree) {
+      mode = "wake";
+      awaitingCommand = false;
+      scheduleRecognition(500);
+    }
+  };
 
   utterance.onend = finish;
   utterance.onerror = finish;
@@ -576,29 +486,29 @@ function speak(text) {
   speechSynthesis.speak(utterance);
 }
 
-// TEST VOICE
 function testVoice() {
   speak(
     "Good evening, sir. " +
-    "JARVIS voice systems are now operational. " +
-    "How may I assist you today?"
+    "JARVIS voice systems are operational."
   );
 }
 
-// SEND TO GROQ THROUGH CLOUDFLARE
 async function askJarvis(message) {
   if (busy || !message.trim()) return;
 
   busy = true;
+  clearRestart();
+
+  // Pause microphone while processing.
+  if (recognition) {
+    try { recognition.abort(); } catch {}
+  }
 
   sendButton.disabled = true;
-  voiceButton.disabled = true;
-
-  stopSpeaking();
+  talkButton.disabled = true;
 
   addMessage("You", message);
-
-  statusText.textContent = "PROCESSING REQUEST";
+  setStatus("PROCESSING REQUEST");
   systemMessage.textContent =
     "JARVIS is analyzing your command...";
 
@@ -608,74 +518,223 @@ async function askJarvis(message) {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        message: message
-      })
+      body: JSON.stringify({ message })
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(
-        data.error || "AI service unavailable"
-      );
+      throw new Error(data.error || "AI unavailable");
     }
 
-    const reply =
-      data.reply || "No response received.";
+    const reply = data.reply || "No response received.";
 
     addMessage("JARVIS", reply);
-
     systemMessage.textContent =
       "Response generated successfully.";
 
+    busy = false;
     speak(reply);
 
   } catch (error) {
-    console.error("JARVIS Error:", error);
-
-    addMessage(
-      "SYSTEM",
-      "Connection error: " + error.message
-    );
-
-    statusText.textContent = "CONNECTION ERROR";
+    console.error(error);
+    addMessage("SYSTEM",
+      "Connection error: " + error.message);
 
     systemMessage.textContent =
       "Unable to contact the AI backend.";
-  } finally {
+
+    setStatus("CONNECTION ERROR");
     busy = false;
+
+    if (handsFree) scheduleRecognition(1500);
+
+  } finally {
     sendButton.disabled = false;
-    voiceButton.disabled = false;
+    talkButton.disabled = false;
   }
 }
 
-// SEND TEXT
 function sendCommand() {
   if (busy) return;
 
   const message = commandInput.value.trim();
-
   if (!message) return;
 
   commandInput.value = "";
+  stopSpeaking();
   askJarvis(message);
 }
 
 commandInput.addEventListener("keydown", event => {
-  if (event.key === "Enter") {
-    sendCommand();
-  }
+  if (event.key === "Enter") sendCommand();
 });
 
-// MICROPHONE
-function startListening() {
-  if (busy || recognition) return;
+// START SPEECH RECOGNITION
+function beginRecognition(nextMode) {
+  if (!Recognition || busy || speaking ||
+      listening || recognition) return;
 
-  const Recognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
+  clearRestart();
+  mode = nextMode;
 
+  const rec = new Recognition();
+  recognition = rec;
+
+  rec.lang = "en-US";
+  rec.continuous = false;
+  rec.interimResults = false;
+  rec.maxAlternatives = 1;
+
+  let resultReceived = false;
+  let errorCode = null;
+
+  rec.onstart = () => {
+    if (recognition !== rec) return;
+
+    listening = true;
+    restartAttempts = 0;
+    core.classList.add("listening");
+
+    if (mode === "wake") {
+      setStatus("AWAITING HEY JARVIS");
+      systemMessage.textContent =
+        'Listening for "Hey JARVIS"...';
+    } else {
+      setStatus("LISTENING FOR COMMAND");
+      systemMessage.textContent =
+        "Listening for your question...";
+    }
+  };
+
+  rec.onresult = event => {
+    resultReceived = true;
+
+    const transcript =
+      event.results[0][0].transcript.trim();
+
+    if (mode === "wake") {
+      const match = transcript.match(
+        /\b(?:hey|hi|okay|ok)\s+jarvis\b[,.!?\s]*/i
+      );
+
+      if (match) {
+        const command = transcript
+          .slice(match.index + match[0].length)
+          .trim();
+
+        if (command) {
+          awaitingCommand = false;
+          mode = "wake";
+          askJarvis(command);
+        } else {
+          awaitingCommand = true;
+          mode = "command";
+          systemMessage.textContent =
+            "Yes, sir? What is your command?";
+        }
+      }
+    } else {
+      awaitingCommand = false;
+      mode = "wake";
+
+      if (transcript) {
+        askJarvis(transcript);
+      }
+    }
+  };
+
+  rec.onerror = event => {
+    errorCode = event.error;
+
+    if (errorCode === "not-allowed" ||
+        errorCode === "service-not-allowed") {
+      handsFree = false;
+      awaitingCommand = false;
+      updateHandsFreeButton();
+
+      systemMessage.textContent =
+        "Microphone permission or speech service denied.";
+    } else if (errorCode === "audio-capture") {
+      handsFree = false;
+      updateHandsFreeButton();
+      systemMessage.textContent =
+        "No working microphone detected.";
+    } else if (errorCode !== "no-speech" &&
+               errorCode !== "aborted") {
+      systemMessage.textContent =
+        "Speech recognition error: " + errorCode;
+    }
+  };
+
+  rec.onend = () => {
+    if (recognition !== rec) return;
+
+    recognition = null;
+    listening = false;
+    core.classList.remove("listening");
+
+    if (!handsFree && !busy && !speaking) {
+      setStatus("SYSTEM ONLINE");
+      return;
+    }
+
+    if (busy || speaking || !handsFree) return;
+
+    if (errorCode === "not-allowed" ||
+        errorCode === "service-not-allowed" ||
+        errorCode === "audio-capture") return;
+
+    if (awaitingCommand) {
+      awaitingCommand = false;
+      scheduleRecognition(300, "command");
+    } else {
+      scheduleRecognition(
+        resultReceived ? 350 : 1000,
+        "wake"
+      );
+    }
+  };
+
+  try {
+    rec.start();
+  } catch (error) {
+    recognition = null;
+    listening = false;
+    core.classList.remove("listening");
+    systemMessage.textContent =
+      "Could not start speech recognition.";
+  }
+}
+
+// RESTART AFTER EACH RECOGNITION SESSION
+function scheduleRecognition(delay = 500, nextMode = "wake") {
+  if (!handsFree || busy || speaking) return;
+
+  clearRestart();
+
+  restartTimer = setTimeout(() => {
+    restartTimer = null;
+
+    if (!handsFree || busy || speaking) return;
+
+    if (document.visibilityState === "hidden") {
+      systemMessage.textContent =
+        "Keep the JARVIS tab visible for reliable listening.";
+      return;
+    }
+
+    if (listening || recognition) {
+      scheduleRecognition(500, nextMode);
+      return;
+    }
+
+    beginRecognition(nextMode);
+  }, delay);
+}
+
+// ONE-TIME PUSH-TO-TALK
+function startTalk() {
   if (!Recognition) {
     systemMessage.textContent =
       "Speech recognition is not supported. " +
@@ -683,62 +742,59 @@ function startListening() {
     return;
   }
 
+  handsFree = false;
+  awaitingCommand = false;
+  updateHandsFreeButton();
+  clearRestart();
+
+  if (recognition) {
+    try { recognition.abort(); } catch {}
+    return;
+  }
+
   stopSpeaking();
+  beginRecognition("command");
+}
 
-  recognition = new Recognition();
-
-  recognition.lang = "en-US";
-  recognition.continuous = false;
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
-
-  core.classList.add("listening");
-
-  statusText.textContent = "LISTENING";
-  systemMessage.textContent =
-    "Listening for your command...";
-
-  let heard = false;
-
-  recognition.onresult = event => {
-    heard = true;
-
-    const message =
-      event.results[0][0].transcript;
-
-    core.classList.remove("listening");
-    recognition = null;
-
-    askJarvis(message);
-  };
-
-  recognition.onerror = event => {
-    if (!heard) {
-      systemMessage.textContent =
-        "Microphone error: " + event.error;
-    }
-  };
-
-  recognition.onend = () => {
-    core.classList.remove("listening");
-    recognition = null;
-
-    if (!busy) {
-      statusText.textContent = "SYSTEM ONLINE";
-    }
-  };
-
-  try {
-    recognition.start();
-  } catch (error) {
-    recognition = null;
-    core.classList.remove("listening");
-
+// HANDS-FREE WAKE PHRASE
+function toggleHandsFree() {
+  if (!Recognition) {
     systemMessage.textContent =
-      "Could not start microphone.";
+      "Speech recognition unavailable. " +
+      "Use Edge or Chrome.";
+    return;
+  }
+
+  handsFree = !handsFree;
+  awaitingCommand = false;
+  updateHandsFreeButton();
+
+  clearRestart();
+
+  if (recognition) {
+    try { recognition.abort(); } catch {}
+  }
+
+  if (handsFree) {
+    systemMessage.textContent =
+      'Hands-free enabled. Say "Hey JARVIS".';
+    scheduleRecognition(400);
+  } else {
+    setStatus("SYSTEM ONLINE");
+    systemMessage.textContent =
+      "Hands-free mode disabled.";
   }
 }
 
+// RECOVER WHEN RETURNING TO THE TAB
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" &&
+      handsFree && !busy && !speaking) {
+    scheduleRecognition(600);
+  }
+});
+
+updateHandsFreeButton();
 </script>
 </body>
 </html>
