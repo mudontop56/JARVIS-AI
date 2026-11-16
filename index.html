@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JARVIS AI</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(circle, #06283b, #020711 75%);
+  color: #63e8ff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  min-height: 100vh;
+}
+header { padding: 25px; letter-spacing: 5px; }
+h1 { font-size: 32px; }
+.status { color: #83ffce; }
+.core {
+  width: 260px;
+  height: 260px;
+  margin: 50px auto 30px;
+  border: 5px solid #00d9ff;
+  border-radius: 50%;
+  box-shadow: 0 0 35px #00bfff, inset 0 0 35px #007fa8;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.core::before {
+  content: "";
+  position: absolute;
+  inset: 15px;
+  border: 3px dashed #42dfff;
+  border-radius: 50%;
+  animation: spin 12s linear infinite;
+}
+.core span {
+  font-size: 38px;
+  font-weight: bold;
+  text-shadow: 0 0 20px #00d9ff;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+button {
+  padding: 14px 28px;
+  background: #04344c;
+  color: #8deeff;
+  border: 1px solid #00d9ff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+button:hover { background: #075475; }
+#response {
+  max-width: 600px;
+  margin: 25px auto;
+  padding: 15px;
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>J.A.R.V.I.S.</h1>
+  <p class="status">SYSTEM ONLINE</p>
+  <div id="clock"></div>
+</header>
+
+<div class="core"><span>JARVIS</span></div>
+
+<button onclick="listen()">🎙 TALK TO JARVIS</button>
+<p id="response">Awaiting your command, sir.</p>
+
+<script>
+const response = document.getElementById("response");
+
+function speak(text) {
+  speechSynthesis.cancel();
+  const voice = new SpeechSynthesisUtterance(text);
+  voice.rate = 0.95;
+  speechSynthesis.speak(voice);
+}
+
+function answer(command) {
+  const text = command.toLowerCase();
+  let reply;
+
+  if (text.includes("hello") || text.includes("hi")) {
+    reply = "Good day, sir. All systems are operational.";
+  } else if (text.includes("time")) {
+    reply = "The current time is " +
+      new Date().toLocaleTimeString();
+  } else if (text.includes("date")) {
+    reply = "Today is " +
+      new Date().toLocaleDateString();
+  } else if (text.includes("your name")) {
+    reply = "I am JARVIS, your personal AI assistant.";
+  } else {
+    reply = "Command received, sir. My AI brain is not connected yet.";
+  }
+
+  response.textContent = reply;
+  speak(reply);
+}
+
+function listen() {
+  const Recognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  if (!Recognition) {
+    response.textContent =
+      "Speech recognition is not supported in this browser.";
+    return;
+  }
+
+  const recognition = new Recognition();
+  recognition.lang = "en-US";
+  recognition.onresult = event => {
+    const command = event.results[0][0].transcript;
+    response.textContent = "You: " + command;
+    answer(command);
+  };
+  recognition.onerror = event => {
+    response.textContent = "Microphone error: " + event.error;
+  };
+  recognition.start();
+}
+
+setInterval(() => {
+  document.getElementById("clock").textContent =
+    new Date().toLocaleString();
+}, 1000);
+</script>
+</body>
+</html>
+
